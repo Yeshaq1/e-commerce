@@ -9,7 +9,7 @@ dotenv.config();
 
 //connect DB (Mongo)
 connectDB();
-
+// set app
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -17,8 +17,10 @@ app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
+// route middleware
 app.use('/api/products', productRoutes);
 
+// Error handeling
 app.use(notFound);
 app.use(errorHandler);
 
