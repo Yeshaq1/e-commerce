@@ -7,6 +7,13 @@ const Header = () => {
   const cartDetail = useSelector((state) => state.cartDetail);
   const { cartProducts } = cartDetail;
 
+  let totalCartItems = 0;
+
+  cartProducts.map((item)=>{
+    totalCartItems = totalCartItems + item.qty;
+    return totalCartItems
+  })
+
   return (
     <header>
       <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
@@ -23,7 +30,7 @@ const Header = () => {
                   {' '}
                   <i className='fas fa-shopping-cart'></i> CART
                   {cartProducts.length > 0 ? (
-                    <span className='badge'>{cartProducts.length}</span>
+                    <span className='badge'>{totalCartItems}</span>
                   ) : null}
                 </Nav.Link>
               </LinkContainer>

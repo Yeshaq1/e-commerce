@@ -18,10 +18,13 @@ const CartScreen = ({ match, history }) => {
   const cartDetail = useSelector((state) => state.cartDetail);
   const { cartProducts } = cartDetail;
 
+  
+
   return (
     <Row>
       <Col lg={8}>
         <h1>Shopping Cart</h1>
+      
         {cartProducts.length === 0 ? (
           <Message>
             Your cart is empty

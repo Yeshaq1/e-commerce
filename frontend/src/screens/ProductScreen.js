@@ -20,6 +20,7 @@ const ProductScreen = ({ match, history }) => {
   const dispatch = useDispatch();
 
   const [qty, updateQty] = useState(1);
+  const [addToCartClicked, updateAddToCartClicked] = useState(false);
 
   const productDetail = useSelector((state) => state.productDetail);
   const { loading, error, product } = productDetail;
@@ -30,14 +31,18 @@ const ProductScreen = ({ match, history }) => {
 
   const addToCartHandler = () => {
     dispatch(addToCart(product._id, parseInt(qty)));
+    updateAddToCartClicked(true);
     // history.push(`/cart/${match.params.id}`);
   };
+
+  
 
   return (
     <Fragment>
       <Link to='/' className='btn btn-light my-3'>
         Go Back
       </Link>
+      {addToCartClicked && <Message>Your Item {product.name} has been added to cart  <Link style ={{color: 'blue'}} to ="/cart">click here to view your cart</Link></Message>}
       {loading ? (
         <Loader />
       ) : error ? (
