@@ -14,11 +14,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProductById } from '../actions/productActions';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
+import { addToCart } from '../actions/cartActions';
 
-const ProductScreen = ({ match }) => {
+const ProductScreen = ({ match, history }) => {
   const dispatch = useDispatch();
 
-  const [qty, updateQty] = useState(0);
+  const [qty, updateQty] = useState(1);
 
   const productDetail = useSelector((state) => state.productDetail);
   const { loading, error, product } = productDetail;
@@ -26,6 +27,11 @@ const ProductScreen = ({ match }) => {
   useEffect(() => {
     dispatch(getProductById(match.params.id));
   }, [match.params.id, dispatch]);
+
+  const addToCartHandler = () => {
+    dispatch(addToCart(product._id, parseInt(qty)));
+    // history.push(`/cart/${match.params.id}`);
+  };
 
   return (
     <Fragment>
@@ -103,6 +109,7 @@ const ProductScreen = ({ match }) => {
                   <Button
                     className='col-12'
                     disabled={product.countInStock === 0}
+                    onClick={addToCartHandler}
                   >
                     Add To Cart
                   </Button>

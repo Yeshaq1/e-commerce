@@ -13,3 +13,9 @@ h3 {
 a {
   text-decoration: none;
 }
+
+.badge {
+  font-size: 15px;
+  color: #ff8c00;
+  font-weight: bolder;
+}
