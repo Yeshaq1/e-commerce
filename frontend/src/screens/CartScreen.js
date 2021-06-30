@@ -18,13 +18,14 @@ const CartScreen = ({ match, history }) => {
   const cartDetail = useSelector((state) => state.cartDetail);
   const { cartProducts } = cartDetail;
 
-  
+  const checkoutHandler = () => {
+
+  }
 
   return (
     <Row>
       <Col lg={8}>
         <h1>Shopping Cart</h1>
-      
         {cartProducts.length === 0 ? (
           <Message>
             Your cart is empty
@@ -35,7 +36,7 @@ const CartScreen = ({ match, history }) => {
         ) : (
           <ListGroup variant='flush'>
             {cartProducts.map((product) => (
-              <ListGroup.Item key={product._id}>
+              <ListGroup.Item className='p-4' key={product._id}>
                 <Row>
                   <Col lg={2}>
                     <Image
@@ -80,8 +81,22 @@ const CartScreen = ({ match, history }) => {
           </ListGroup>
         )}
       </Col>
-      <Col lg={2}></Col>
-      <Col lg={2}></Col>
+      <Col lg={4}>
+        <Card>
+          <ListGroup variant ='flush'>
+            <ListGroup.Item>
+              <h2>Subtotal ({cartProducts.reduce((acc, item)=> acc + item.qty, 0)}) items</h2>
+              ${cartProducts.reduce((acc, item)=> acc + item.qty *item.price, 0).toFixed(2)}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Button className='col-12' type="button" disabled={cartProducts.length ===0} onclick={checkoutHandler}>
+                Proceed To Checkout
+              </Button>
+            </ListGroup.Item>
+          </ListGroup>
+        </Card>
+      </Col>
+      
     </Row>
   );
 };
