@@ -45,6 +45,7 @@ export const login =
 export const logout = () => async (dispatch) => {
   try {
     dispatch({ type: LOGOUT_REQUEST });
+    await axios.post('/api/users/logout');
     localStorage.removeItem('userInfo');
   } catch (error) {
     dispatch({

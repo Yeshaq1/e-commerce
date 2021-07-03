@@ -2,16 +2,17 @@ import User from '../models/userModel.js';
 import asyncHandler from 'express-async-handler';
 import jwt from 'jsonwebtoken';
 
-// this is a custom middleware.
-
+// this is a custom middleware//
 const auth = asyncHandler(async (req, res, next) => {
   if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
+    // req.headers.authorization &&
+    // req.headers.authorization.startsWith('Bearer')
+    req.cookies.token
   ) {
     try {
       const decoded = jwt.verify(
-        req.headers.authorization.split(' ')[1],
+        req.cookies.token,
+        // req.headers.authorization.split(' ')[1],
         process.env.JWT_SECRET
       );
 

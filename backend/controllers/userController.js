@@ -12,11 +12,12 @@ const userLogin = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user && (await user.comparePasswords(password))) {
+    await generateToken(res, user._id);
     res.json({
       name: user.name,
       email: user.email,
       _id: user._id,
-      token: generateToken(user._id),
+
       isAdmin: user.isAdmin,
     });
   } else {
@@ -81,4 +82,12 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-export { userLogin, getUserProfile, userRegister };
+const logout = asyncHandler(async (req, res) => {
+  res.clearCookie('token', {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
+  res.status(200).json({ message: 'user logged out' });
+});
+
+export { userLogin, getUserProfile, userRegister, logout };

@@ -5,6 +5,8 @@ import connectDB from './config/db.js';
 import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import { errorHandler, notFound } from './middleware/errorMiddleware.js';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -15,6 +17,14 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
+app.use(cookieParser());
+
+app.use(
+  cors({
+    origin: [`${process.env.FRONT_URL}`, 'http://localhost:3000'],
+    credentials: true,
+  })
+);
 
 app.get('/', (req, res) => {
   res.send('API is running...');
