@@ -18,9 +18,7 @@ const CartScreen = ({ match, history }) => {
   const cartDetail = useSelector((state) => state.cartDetail);
   const { cartProducts } = cartDetail;
 
-  const checkoutHandler = () => {
-
-  }
+  const checkoutHandler = () => {};
 
   return (
     <Row>
@@ -83,20 +81,30 @@ const CartScreen = ({ match, history }) => {
       </Col>
       <Col lg={4}>
         <Card>
-          <ListGroup variant ='flush'>
+          <ListGroup variant='flush'>
             <ListGroup.Item>
-              <h2>Subtotal ({cartProducts.reduce((acc, item)=> acc + item.qty, 0)}) items</h2>
-              ${cartProducts.reduce((acc, item)=> acc + item.qty *item.price, 0).toFixed(2)}
+              <h2>
+                Subtotal (
+                {cartProducts.reduce((acc, item) => acc + item.qty, 0)}) items
+              </h2>
+              $
+              {cartProducts
+                .reduce((acc, item) => acc + item.qty * item.price, 0)
+                .toFixed(2)}
             </ListGroup.Item>
             <ListGroup.Item>
-              <Button className='col-12' type="button" disabled={cartProducts.length ===0} onclick={checkoutHandler}>
+              <Button
+                className='col-12'
+                type='button'
+                disabled={cartProducts.length === 0}
+                onClick={checkoutHandler}
+              >
                 Proceed To Checkout
               </Button>
             </ListGroup.Item>
           </ListGroup>
         </Card>
       </Col>
-      
     </Row>
   );
 };

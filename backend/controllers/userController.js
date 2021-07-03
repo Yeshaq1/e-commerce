@@ -21,7 +21,9 @@ const userLogin = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(401);
-    throw new Error('Not Authorized');
+    throw new Error(
+      'Not Authorized, please check your email and password combination'
+    );
   }
 });
 
