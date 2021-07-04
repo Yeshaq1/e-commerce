@@ -49,11 +49,11 @@ const userRegister = asyncHandler(async (req, res) => {
   });
 
   if (user) {
+    await generateToken(res, user._id);
     res.status(201).json({
       name: user.name,
       email: user.email,
       _id: user._id,
-      token: generateToken(user._id),
       isAdmin: user.isAdmin,
     });
   } else {
@@ -82,6 +82,38 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+// --Desc: PUT user profile
+// --Route: PUT /api/users/profile
+// --access: Private Route
+
+const updateUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    if (req.body.password) {
+      user.password = req.body.password;
+    }
+
+    const updatedUser = await user.save();
+
+    res.json({
+      name: updatedUser.name,
+      email: updatedUser.email,
+      _id: updatedUser._id,
+      isAdmin: updatedUser.isAdmin,
+    });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
+// --Desc: Logout a user by clearing cookies.
+// --Route: POST /api/users/logout
+// --access: Public
+// --- NEEDS A CHECK IF AUTH MIDDLEWARE IS NECCESARY.
 const logout = asyncHandler(async (req, res) => {
   res.clearCookie('token', {
     expires: new Date(Date.now()),
@@ -90,4 +122,4 @@ const logout = asyncHandler(async (req, res) => {
   res.status(200).json({ message: 'user logged out' });
 });
 
-export { userLogin, getUserProfile, userRegister, logout };
+export { userLogin, getUserProfile, userRegister, logout, updateUserProfile };
