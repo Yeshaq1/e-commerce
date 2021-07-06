@@ -23,9 +23,6 @@ const ProfileScreen = ({ history, location }) => {
   const { password, email, name } = credentials;
 
   useEffect(() => {
-    if (!user) {
-      history.push('/login');
-    }
     dispatch(getProfile());
 
     updateCredentials({

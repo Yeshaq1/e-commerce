@@ -18,7 +18,9 @@ const CartScreen = ({ match, history }) => {
   const cartDetail = useSelector((state) => state.cartDetail);
   const { cartProducts } = cartDetail;
 
-  const checkoutHandler = () => {};
+  const checkoutHandler = () => {
+    history.push('/login?redirect=shipping');
+  };
 
   return (
     <Row>
