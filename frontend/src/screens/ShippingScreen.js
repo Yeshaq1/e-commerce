@@ -37,61 +37,63 @@ const ShippingScreen = ({ history }) => {
   };
 
   return (
-    <FormContainer>
-      <CheckoutSteps step1 step2 />
-      <h1>Shipping</h1>
-      <Form onSubmit={submitHandler}>
-        <Form.Group>
-          <Form.Label>Address</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Enter address'
-            value={address}
-            name='address'
-            required
-            onChange={handleChange}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>City</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Enter City'
-            value={city}
-            name='city'
-            required
-            onChange={handleChange}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Postal Code</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Enter Postal Code'
-            value={postalCode}
-            name='postalCode'
-            required
-            onChange={handleChange}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Country</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Enter Country'
-            value={country}
-            name='country'
-            required
-            onChange={handleChange}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Button className='mt-4' type='submit' variant='primary'>
-            Continue
-          </Button>
-        </Form.Group>
-      </Form>
-    </FormContainer>
+    <>
+      <FormContainer>
+        <CheckoutSteps step1 step2 />
+        <h1>Shipping</h1>
+        <Form onSubmit={submitHandler}>
+          <Form.Group>
+            <Form.Label>Address</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Enter address'
+              value={address}
+              name='address'
+              required
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>City</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Enter City'
+              value={city}
+              name='city'
+              required
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Postal Code</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Enter Postal Code'
+              value={postalCode}
+              name='postalCode'
+              required
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Country</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Enter Country'
+              value={country}
+              name='country'
+              required
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Button className='mt-4' type='submit' variant='primary'>
+              Continue
+            </Button>
+          </Form.Group>
+        </Form>
+      </FormContainer>
+    </>
   );
 };
 
