@@ -11,6 +11,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import ShippingScreen from './screens/ShippingScreen';
 import PrivateRoute from './components/PrivateRoute';
+import PaymentScreen from './screens/PaymentScreen';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path='/register' component={RegisterScreen} />
           <PrivateRoute path='/profile' component={ProfileScreen} />
           <PrivateRoute path='/shipping' component={ShippingScreen} />
+          <PrivateRoute path='/payment' component={PaymentScreen} />
         </Container>
       </main>
       <Footer />
