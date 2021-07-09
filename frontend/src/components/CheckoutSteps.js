@@ -9,15 +9,15 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
         <Col lg={3}>
           <Nav.Item>
             {step1 ? (
-              <LinkContainer to='/login'>
+              <LinkContainer to='/cart'>
                 <Nav.Link>
-                  <i class='fas fa-sign-in-alt'></i> Sign In
+                  <i className='fas fa-shopping-cart'></i> Cart
                 </Nav.Link>
               </LinkContainer>
             ) : (
               <Nav.Link disabled>
                 <span>
-                  <i class='fas fa-sign-in-alt'></i> Sign In
+                  <i className='fas fa-sign-in-alt'></i> Sign In
                 </span>
               </Nav.Link>
             )}
@@ -28,12 +28,12 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
             {step2 ? (
               <LinkContainer to='/shipping'>
                 <Nav.Link>
-                  <i class='fas fa-truck'></i> Shipping
+                  <i className='fas fa-truck'></i> Shipping
                 </Nav.Link>
               </LinkContainer>
             ) : (
               <Nav.Link disabled>
-                <i class='fas fa-truck'></i> Shipping
+                <i className='fas fa-truck'></i> Shipping
               </Nav.Link>
             )}
           </Nav.Item>
@@ -43,12 +43,12 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
             {step3 ? (
               <LinkContainer to='/payment'>
                 <Nav.Link>
-                  <i class='fas fa-credit-card'></i> Payment
+                  <i className='fas fa-credit-card'></i> Payment
                 </Nav.Link>
               </LinkContainer>
             ) : (
               <Nav.Link disabled>
-                <i class='fas fa-credit-card'></i> Payment
+                <i className='fas fa-credit-card'></i> Payment
               </Nav.Link>
             )}
           </Nav.Item>
@@ -58,12 +58,12 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
             {step4 ? (
               <LinkContainer to='/placeorder'>
                 <Nav.Link>
-                  <i class='fas fa-check-square'></i>Order
+                  <i className='fas fa-check-square'></i>Order
                 </Nav.Link>
               </LinkContainer>
             ) : (
               <Nav.Link disabled>
-                <i class='fas fa-check-square'></i> Place Order
+                <i className='fas fa-check-square'></i> Place Order
               </Nav.Link>
             )}
           </Nav.Item>
