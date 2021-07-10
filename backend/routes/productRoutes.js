@@ -4,7 +4,6 @@ import {
   getProductById,
   getProducts,
 } from '../controllers/productController.js';
-import auth from '../middleware/authMiddleware.js';
 
 router.route('/').get(getProducts);
 

@@ -6,7 +6,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
   return (
     <Nav style={{ display: 'block' }} className='justify-content-center mb-4'>
       <Row>
-        <Col lg={3}>
+        <Col xl={3}>
           <Nav.Item>
             {step1 ? (
               <LinkContainer to='/cart'>
@@ -23,7 +23,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
             )}
           </Nav.Item>
         </Col>
-        <Col lg={3}>
+        <Col xl={3}>
           <Nav.Item>
             {step2 ? (
               <LinkContainer to='/shipping'>
@@ -38,7 +38,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
             )}
           </Nav.Item>
         </Col>
-        <Col lg={3}>
+        <Col xl={3}>
           <Nav.Item>
             {step3 ? (
               <LinkContainer to='/payment'>
@@ -53,12 +53,12 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
             )}
           </Nav.Item>
         </Col>
-        <Col lg={3}>
+        <Col xl={3}>
           <Nav.Item>
             {step4 ? (
               <LinkContainer to='/placeorder'>
                 <Nav.Link>
-                  <i className='fas fa-check-square'></i>Order
+                  <i className='fas fa-check-square'></i> Place Order
                 </Nav.Link>
               </LinkContainer>
             ) : (

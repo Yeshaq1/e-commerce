@@ -12,6 +12,7 @@ import ProfileScreen from './screens/ProfileScreen';
 import ShippingScreen from './screens/ShippingScreen';
 import PrivateRoute from './components/PrivateRoute';
 import PaymentScreen from './screens/PaymentScreen';
+import PlaceOrderScreen from './screens/PlaceOrderScreen';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <PrivateRoute path='/profile' component={ProfileScreen} />
           <PrivateRoute path='/shipping' component={ShippingScreen} />
           <PrivateRoute path='/payment' component={PaymentScreen} />
+          <PrivateRoute path='/placeorder' component={PlaceOrderScreen} />
         </Container>
       </main>
       <Footer />

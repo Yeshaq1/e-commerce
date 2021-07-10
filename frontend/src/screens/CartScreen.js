@@ -12,6 +12,8 @@ import {
   Card,
 } from 'react-bootstrap';
 import { addToCart, removeFromCart } from '../actions/cartActions';
+import FormContainer from '../components/FormContainer';
+import CheckoutSteps from '../components/CheckoutSteps';
 
 const CartScreen = ({ match, history }) => {
   const dispatch = useDispatch();
@@ -24,6 +26,9 @@ const CartScreen = ({ match, history }) => {
 
   return (
     <Row>
+      <FormContainer>
+        <CheckoutSteps step1 />
+      </FormContainer>
       <Col lg={8}>
         <h1>Shopping Cart</h1>
         {cartProducts.length === 0 ? (

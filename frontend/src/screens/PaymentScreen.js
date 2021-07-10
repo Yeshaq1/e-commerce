@@ -16,7 +16,7 @@ const PaymentScreen = ({ history }) => {
     history.push('/cart');
   }
 
-  const [paymentMethod, updatePaymentMethod] = useState('paypal');
+  const [paymentMethod, updatePaymentMethod] = useState('PayPal');
 
   const dispatch = useDispatch();
 
@@ -34,20 +34,19 @@ const PaymentScreen = ({ history }) => {
         <Form.Group>
           <Form.Label as='legend'>Select Method</Form.Label>
           <Form.Check
-            checked
             label='PayPal or Credit Card'
             type='radio'
-            value='paypal'
+            value='PayPal'
             name='paymentMethod'
-            onChange={(e) => updatePaymentMethod(e.target.value)}
+            onClick={(e) => updatePaymentMethod(e.target.value)}
           />
 
           <Form.Check
             label='Stripe'
             type='radio'
-            value='stripe'
+            value='Stripe'
             name='paymentMethod'
-            onChange={(e) => updatePaymentMethod(e.target.value)}
+            onClick={(e) => updatePaymentMethod(e.target.value)}
           />
         </Form.Group>
         <Button className='mt-4' type='submit' variant='primary'>

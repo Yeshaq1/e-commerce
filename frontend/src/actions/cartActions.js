@@ -16,6 +16,7 @@ export const addToCart = (productId, qty) => async (dispatch, getState) => {
       payload: {
         ...data,
         qty,
+        product: productId,
       },
     });
   } catch (error) {
