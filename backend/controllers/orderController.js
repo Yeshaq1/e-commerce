@@ -40,4 +40,12 @@ const addOrder = asyncHandler(async (req, res) => {
   }
 });
 
+// --Desc: Get Order by ID
+// --Route: Get /api/orders/:id
+// --access: Private Route
+
+const getOrderById = asyncHandler(async (req, res) => {
+  //insert code here.
+});
+
 export { addOrder };
