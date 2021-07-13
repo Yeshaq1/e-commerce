@@ -45,7 +45,7 @@ const addOrder = asyncHandler(async (req, res) => {
 // --access: Private Route
 
 const getOrderById = asyncHandler(async (req, res) => {
-  //insert code here.
+  const order = Order.findById(req.params.id).populate('user', 'name, email');
 });
 
 export { addOrder };
