@@ -6,6 +6,13 @@ import FormContainer from '../components/FormContainer';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { createOrder } from '../actions/orderActions';
 import Message from '../components/Message';
+import PaymentForm from '../components/PaymentForm';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+
+const promise = loadStripe(
+  'pk_test_51HIEIPEcQGt6LPFFU9Nc3WGFsoAndNPoLVF5Yeuf3oZwsUyjY9WbtnpkePSEy3to4y6zYGK2ukmkA2ieH8HehfIk00DLPKvsnE'
+);
 
 const PlaceOrderScreen = ({ history }) => {
   const cartDetail = useSelector((state) => state.cartDetail);
@@ -129,14 +136,9 @@ const PlaceOrderScreen = ({ history }) => {
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
-                <Button
-                  className='col-12'
-                  type='button'
-                  disabled={cartProducts.length === 0}
-                  onClick={submitHandler}
-                >
-                  Place Order
-                </Button>
+                <Elements stripe={promise}>
+                  <PaymentForm />
+                </Elements>
               </ListGroup.Item>
             </ListGroup>
           </Card>

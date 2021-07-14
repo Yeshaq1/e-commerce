@@ -5,7 +5,7 @@ import {
 } from '../constants/paymentConstants';
 import axios from 'axios';
 
-export const createPaymentIntent = (totalPrice) => async (dispatch) => {
+export const createPaymentIntent = (cartDetails) => async (dispatch) => {
   dispatch({ type: PAYMENT_INTENT_REQUEST });
 
   const config = {
@@ -14,15 +14,12 @@ export const createPaymentIntent = (totalPrice) => async (dispatch) => {
     },
   };
 
+  const body = JSON.stringify(cartDetails);
+
   try {
-    const { data } = await axios.get(
-      '/api/payment/intent',
-      totalPrice,
-      config,
-      {
-        withCredentials: true,
-      }
-    );
+    const { data } = await axios.post('/api/payment/intent', body, config, {
+      withCredentials: true,
+    });
 
     dispatch({
       type: PAYMENT_INTENT_SUCCESS,
