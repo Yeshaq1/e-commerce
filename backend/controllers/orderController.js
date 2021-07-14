@@ -45,7 +45,18 @@ const addOrder = asyncHandler(async (req, res) => {
 // --access: Private Route
 
 const getOrderById = asyncHandler(async (req, res) => {
-  const order = Order.findById(req.params.id).populate('user', 'name, email');
+  const order = await Order.findById(req.params.id).populate(
+    'user',
+    'name email'
+  );
+
+  console.log(req.params.id);
+  if (order) {
+    res.json(order);
+  } else {
+    res.status(404);
+    throw new Error('no order found');
+  }
 });
 
-export { addOrder };
+export { addOrder, getOrderById };
