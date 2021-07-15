@@ -10,7 +10,9 @@ const createPaymentIntent = asyncHandler(async (req, res) => {
     totalPrice,
     taxPrice,
     itemsPrice,
-  } = req.body;
+  } = req.body.cartDetail;
+
+  const customerEmail = req.body.user.email;
 
   const chargedAmount = Number(totalPrice) * 100;
 
@@ -18,6 +20,7 @@ const createPaymentIntent = asyncHandler(async (req, res) => {
   const paymentIntent = await stripe.paymentIntents.create({
     amount: chargedAmount,
     currency: 'usd',
+    receipt_email: customerEmail,
   });
 
   if (paymentIntent) {

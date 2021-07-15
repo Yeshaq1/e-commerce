@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createPaymentIntent } from '../actions/paymentActions';
 import { Button, Form } from 'react-bootstrap';
 import { createOrder } from '../actions/orderActions';
+import { resetCart } from '../actions/cartActions';
 
-export default function PaymentForm() {
+export default function PaymentForm({ history }) {
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState('');
@@ -15,7 +16,6 @@ export default function PaymentForm() {
   const { clientSecret } = paymentIntent;
 
   const cartDetail = useSelector((state) => state.cartDetail);
-  const { totalPrice } = cartDetail;
 
   const authDetial = useSelector((state) => state.authDetail);
   const { user } = authDetial;
@@ -27,8 +27,8 @@ export default function PaymentForm() {
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    dispatch(createPaymentIntent(cartDetail));
-  }, [dispatch]);
+    dispatch(createPaymentIntent(cartDetail, user));
+  }, [dispatch, cartDetail, user]);
 
   const cardStyle = {
     style: {
@@ -63,7 +63,6 @@ export default function PaymentForm() {
       payment_method: {
         card: elements.getElement(CardElement),
       },
-      receipt_email: 'yousefishaq@live.com',
     });
 
     if (payload.error) {
@@ -74,6 +73,7 @@ export default function PaymentForm() {
       setProcessing(false);
       setSucceeded(true);
       dispatch(createOrder(cartDetail));
+      dispatch(resetCart());
     }
   };
 
@@ -103,15 +103,6 @@ export default function PaymentForm() {
           {error}
         </div>
       )}
-      {/* Show a success message upon completion */}
-      {/* <p className={succeeded ? 'result-message' : 'result-message hidden'}>
-        Payment succeeded, see the result in your
-        <a href={`https://dashboard.stripe.com/test/payments`}>
-          {' '}
-          Stripe dashboard.
-        </a>{' '}
-        Refresh the page to pay again.
-      </p> */}
     </Form>
   );
 }

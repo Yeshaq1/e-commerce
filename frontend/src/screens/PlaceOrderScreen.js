@@ -1,10 +1,9 @@
 import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import FormContainer from '../components/FormContainer';
 import CheckoutSteps from '../components/CheckoutSteps';
-import { createOrder } from '../actions/orderActions';
 import Message from '../components/Message';
 import PaymentForm from '../components/PaymentForm';
 import { loadStripe } from '@stripe/stripe-js';
@@ -19,7 +18,6 @@ const PlaceOrderScreen = ({ history }) => {
   const { shippingAddress, paymentMethod, cartProducts } = cartDetail;
 
   const { address, city, postalCode, country } = shippingAddress;
-  const dispatch = useDispatch();
 
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, success, error } = orderCreate;
@@ -49,10 +47,6 @@ const PlaceOrderScreen = ({ history }) => {
     }
     // eslint-disable-next-line
   }, [history, success]);
-
-  const submitHandler = () => {
-    dispatch(createOrder(cartDetail));
-  };
 
   return (
     <Fragment>
