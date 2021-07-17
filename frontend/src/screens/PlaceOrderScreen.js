@@ -22,6 +22,13 @@ const PlaceOrderScreen = ({ history }) => {
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, success, error } = orderCreate;
 
+  if (!shippingAddress) {
+    history.push('/shipping');
+  }
+  if (cartProducts.length < 1) {
+    history.push('/cart');
+  }
+
   cartDetail.itemsPrice = cartProducts
     .reduce((acc, item) => acc + item.qty * item.price, 0)
     .toFixed(2);
@@ -45,6 +52,7 @@ const PlaceOrderScreen = ({ history }) => {
     if (success) {
       history.push(`/order/${order._id}`);
     }
+
     // eslint-disable-next-line
   }, [history, success]);
 

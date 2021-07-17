@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createPaymentIntent } from '../actions/paymentActions';
 import { Button, Form } from 'react-bootstrap';
 import { createOrder } from '../actions/orderActions';
-import { resetCart } from '../actions/cartActions';
 
 export default function PaymentForm({ history }) {
   const [succeeded, setSucceeded] = useState(false);
@@ -73,7 +72,6 @@ export default function PaymentForm({ history }) {
       setProcessing(false);
       setSucceeded(true);
       dispatch(createOrder(cartDetail));
-      dispatch(resetCart());
     }
   };
 

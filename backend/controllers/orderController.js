@@ -50,7 +50,6 @@ const getOrderById = asyncHandler(async (req, res) => {
     'name email'
   );
 
-  console.log(req.params.id);
   if (order) {
     res.json(order);
   } else {

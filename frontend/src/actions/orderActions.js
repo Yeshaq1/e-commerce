@@ -3,6 +3,9 @@ import {
   ORDER_CREATE_FAIL,
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
+  ORDER_GET_FAIL,
+  ORDER_GET_REQUEST,
+  ORDER_GET_SUCCESS,
 } from '../constants/orderConstants';
 
 export const createOrder =
@@ -55,3 +58,24 @@ export const createOrder =
       });
     }
   };
+
+export const getOrderById = (orderId) => async (dispatch) => {
+  try {
+    dispatch({ type: ORDER_GET_REQUEST });
+
+    const { data } = await axios.get(`/api/orders/${orderId}`);
+
+    dispatch({
+      type: ORDER_GET_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ORDER_GET_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

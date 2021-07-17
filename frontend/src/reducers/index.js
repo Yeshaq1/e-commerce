@@ -3,7 +3,7 @@ import { productListReducer, productDetailReducer } from './productReducer';
 import { cartReducer } from './cartReducer';
 import { authReducer } from './authReducer';
 import { profileReducer } from './profileReducer';
-import { orderCreateReducer } from './orderReducer';
+import { orderCreateReducer, orderGetReducer } from './orderReducer';
 import { paymentIntentReducer } from './paymentReducer';
 
 export default combineReducers({
@@ -14,4 +14,5 @@ export default combineReducers({
   profileDetail: profileReducer,
   orderCreate: orderCreateReducer,
   paymentIntent: paymentIntentReducer,
+  orderById: orderGetReducer,
 });
