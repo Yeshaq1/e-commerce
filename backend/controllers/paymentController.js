@@ -1,6 +1,10 @@
 import asyncHandler from 'express-async-handler';
 import Stripe from 'stripe';
 
+// --Desc: POST paymentIntent to Stripe
+// --Route: POST /api/payment/intent
+// --access: Private Route
+
 const createPaymentIntent = asyncHandler(async (req, res) => {
   const {
     cartProducts,

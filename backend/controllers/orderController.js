@@ -32,6 +32,7 @@ const addOrder = asyncHandler(async (req, res) => {
       taxPrice,
       shippingPrice,
       totalPrice,
+      isPaid: true,
     });
 
     const createdOrder = await order.save();
@@ -50,7 +51,7 @@ const getOrderById = asyncHandler(async (req, res) => {
     'name email'
   );
 
-  if (order) {
+  if (order && order.user._id.equals(req.user._id)) {
     res.json(order);
   } else {
     res.status(404);
@@ -58,4 +59,21 @@ const getOrderById = asyncHandler(async (req, res) => {
   }
 });
 
-export { addOrder, getOrderById };
+// --Desc: Get Orders
+// --Route: Get /api/orders/myorders
+// --access: Private Route
+
+const getOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({ user: req.user._id })
+    .populate('user', 'name email')
+    .sort({ createdAt: 'desc' });
+
+  if (orders) {
+    res.json(orders);
+  } else {
+    res.status(404);
+    throw new Error('no orders found');
+  }
+});
+
+export { addOrder, getOrderById, getOrders };

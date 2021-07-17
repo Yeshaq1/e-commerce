@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Row, Col, ListGroup, Image } from 'react-bootstrap';
+import { Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -25,13 +25,15 @@ const OrderConfirmationScreen = ({ history, match }) => {
     <Fragment>
       {loading ? (
         <Loader />
+      ) : error ? (
+        <Message variant='danger'>{error}</Message>
       ) : (
         <Row>
           <Col md={8}>
             <ListGroup>
-              {error && <Message variant='danger'>{error}</Message>}
               <ListGroup.Item>
                 <h2>Shipping Information</h2>
+                <span>{order.user?.name}</span>
                 <p>
                   <strong>Address:</strong> {order.shippingAddress?.address},{' '}
                   {order.shippingAddress?.city},{' '}
@@ -72,7 +74,44 @@ const OrderConfirmationScreen = ({ history, match }) => {
                   ))}
                 </ListGroup>
               </ListGroup.Item>
+              <ListGroup.Item>
+                <h2>Delivery Status</h2>
+                <div>
+                  {order.isDelivered ? (
+                    <Message>Your order has been delivered</Message>
+                  ) : (
+                    <Message>Your order will be delivered shortly</Message>
+                  )}
+                </div>
+              </ListGroup.Item>
             </ListGroup>
+          </Col>
+          <Col md={4}>
+            <Card>
+              <ListGroup variant='flush'>
+                <ListGroup.Item>
+                  <h2>Order Summary</h2>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Shipping: </Col>
+                    <Col>${order.shippingPrice}</Col>
+                  </Row>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Tax: </Col>
+                    <Col>${order.taxPrice}</Col>
+                  </Row>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Total: </Col>
+                    <Col>${order.totalPrice}</Col>
+                  </Row>
+                </ListGroup.Item>
+              </ListGroup>
+            </Card>
           </Col>
         </Row>
       )}

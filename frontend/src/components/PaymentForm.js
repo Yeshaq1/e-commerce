@@ -64,6 +64,7 @@ export default function PaymentForm({ history }) {
       },
     });
 
+    console.log(payload.paymentIntent);
     if (payload.error) {
       setError(`Payment failed ${payload.error.message}`);
       setProcessing(false);

@@ -6,6 +6,9 @@ import {
   ORDER_GET_FAIL,
   ORDER_GET_REQUEST,
   ORDER_GET_SUCCESS,
+  ORDERS_GET_REQUEST,
+  ORDERS_GET_SUCCESS,
+  ORDERS_GET_FAIL,
 } from '../constants/orderConstants';
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -45,6 +48,29 @@ export const orderGetReducer = (
       return { loading: false, order: payload };
 
     case ORDER_GET_FAIL:
+      return { loading: false, error: payload };
+
+    default:
+      return state;
+  }
+};
+
+export const ordersGetReducer = (
+  state = {
+    orders: [],
+  },
+  action
+) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case ORDERS_GET_REQUEST:
+      return { loading: true };
+
+    case ORDERS_GET_SUCCESS:
+      return { loading: false, orders: payload };
+
+    case ORDERS_GET_FAIL:
       return { loading: false, error: payload };
 
     default:
