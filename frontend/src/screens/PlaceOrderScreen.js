@@ -62,7 +62,7 @@ const PlaceOrderScreen = ({ history }) => {
         <CheckoutSteps step1 step2 step3 step4 />
       </FormContainer>
       <Row>
-        <Col md={8}>
+        <Col md={7}>
           <ListGroup>
             {error && <Message variant='danger'>{error}</Message>}
             <ListGroup.Item>
@@ -107,7 +107,7 @@ const PlaceOrderScreen = ({ history }) => {
             </ListGroup.Item>
           </ListGroup>
         </Col>
-        <Col md={4}>
+        <Col md={5}>
           <Card>
             <ListGroup variant='flush'>
               <ListGroup.Item>

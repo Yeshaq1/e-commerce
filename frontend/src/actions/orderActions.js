@@ -12,15 +12,18 @@ import {
 } from '../constants/orderConstants';
 
 export const createOrder =
-  ({
-    cartProducts,
-    shippingAddress,
-    paymentMethod,
-    shippingPrice,
-    totalPrice,
-    taxPrice,
-    itemsPrice,
-  }) =>
+  (
+    {
+      cartProducts,
+      shippingAddress,
+      paymentMethod,
+      shippingPrice,
+      totalPrice,
+      taxPrice,
+      itemsPrice,
+    },
+    { id, status, email_address }
+  ) =>
   async (dispatch) => {
     dispatch({
       type: ORDER_CREATE_REQUEST,
@@ -40,6 +43,9 @@ export const createOrder =
       totalPrice,
       taxPrice,
       itemsPrice,
+      id,
+      status,
+      email_address,
     });
 
     try {

@@ -14,6 +14,9 @@ const addOrder = asyncHandler(async (req, res) => {
     taxPrice,
     shippingPrice,
     totalPrice,
+    id,
+    status,
+    email_address,
   } = req.body;
 
   const orderItems = cartProducts;
@@ -33,6 +36,11 @@ const addOrder = asyncHandler(async (req, res) => {
       shippingPrice,
       totalPrice,
       isPaid: true,
+      paymentResult: {
+        status,
+        id,
+        email_address,
+      },
     });
 
     const createdOrder = await order.save();

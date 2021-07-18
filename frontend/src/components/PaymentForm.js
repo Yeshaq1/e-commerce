@@ -64,6 +64,12 @@ export default function PaymentForm({ history }) {
       },
     });
 
+    const paymentResult = {
+      id: payload.paymentIntent.id,
+      status: payload.paymentIntent.status,
+      email_address: payload.paymentIntent.receipt_email,
+    };
+
     console.log(payload.paymentIntent);
     if (payload.error) {
       setError(`Payment failed ${payload.error.message}`);
@@ -72,7 +78,7 @@ export default function PaymentForm({ history }) {
       setError(null);
       setProcessing(false);
       setSucceeded(true);
-      dispatch(createOrder(cartDetail));
+      dispatch(createOrder(cartDetail, paymentResult));
     }
   };
 
