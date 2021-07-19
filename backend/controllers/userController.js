@@ -122,4 +122,26 @@ const logout = asyncHandler(async (req, res) => {
   res.status(200).json({ message: 'user logged out' });
 });
 
-export { userLogin, getUserProfile, userRegister, logout, updateUserProfile };
+// --Desc: GET users
+// --Route: GET /api/users
+// --access: Private Route/Admin Only
+
+const getUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({});
+
+  if (users) {
+    res.json(users);
+  } else {
+    res.status(404);
+    throw new Error('Users not found');
+  }
+});
+
+export {
+  userLogin,
+  getUserProfile,
+  userRegister,
+  logout,
+  updateUserProfile,
+  getUsers,
+};

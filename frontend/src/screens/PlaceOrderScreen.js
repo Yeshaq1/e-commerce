@@ -25,9 +25,6 @@ const PlaceOrderScreen = ({ history }) => {
   if (!shippingAddress) {
     history.push('/shipping');
   }
-  if (cartProducts.length < 1) {
-    history.push('/cart');
-  }
 
   cartDetail.itemsPrice = cartProducts
     .reduce((acc, item) => acc + item.qty * item.price, 0)
@@ -51,6 +48,8 @@ const PlaceOrderScreen = ({ history }) => {
   useEffect(() => {
     if (success) {
       history.push(`/order/${order._id}`);
+    } else if (cartProducts.length < 1) {
+      history.push('/cart');
     }
 
     // eslint-disable-next-line

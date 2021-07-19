@@ -5,8 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { getOrderById } from '../actions/orderActions';
-import { ORDER_CREATE_RESET } from '../constants/orderConstants';
-import { resetCart } from '../actions/cartActions';
 
 const OrderConfirmationScreen = ({ history, match }) => {
   const orderById = useSelector((state) => state.orderById);
@@ -16,9 +14,7 @@ const OrderConfirmationScreen = ({ history, match }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: ORDER_CREATE_RESET });
     dispatch(getOrderById(match.params.id));
-    dispatch(resetCart());
   }, [dispatch, match.params.id]);
 
   return (
