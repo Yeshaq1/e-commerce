@@ -14,6 +14,7 @@ import PrivateRoute from './components/PrivateRoute';
 import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import orderConfirmationScreen from './screens/OrderConfirmationScreen';
+import UserListScreen from './screens/UserListScreen';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <PrivateRoute path='/payment' component={PaymentScreen} />
           <PrivateRoute path='/placeorder' component={PlaceOrderScreen} />
           <PrivateRoute path='/order/:id' component={orderConfirmationScreen} />
+          <PrivateRoute path='/admin/userlist' component={UserListScreen} />
         </Container>
       </main>
       <Footer />
