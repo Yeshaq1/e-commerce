@@ -137,6 +137,21 @@ const getUsers = asyncHandler(async (req, res) => {
   }
 });
 
+// --Desc: Delete user
+// --Route: Delete /api/users/:id
+// --access: Private Route/Admin Only
+
+const DeleteUser = asyncHandler(async (req, res) => {
+  const users = await User.find({});
+
+  if (users) {
+    res.json(users);
+  } else {
+    res.status(404);
+    throw new Error('Users not found');
+  }
+});
+
 export {
   userLogin,
   getUserProfile,
@@ -144,4 +159,5 @@ export {
   logout,
   updateUserProfile,
   getUsers,
+  DeleteUser,
 };
