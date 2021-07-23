@@ -142,9 +142,10 @@ const getUsers = asyncHandler(async (req, res) => {
 // --access: Private Route/Admin Only
 
 const DeleteUser = asyncHandler(async (req, res) => {
-  const users = await User.find({});
+  const { id } = req.body;
+  const userToDelete = await User.find({ id });
 
-  if (users) {
+  if (userToDelete) {
     res.json(users);
   } else {
     res.status(404);
