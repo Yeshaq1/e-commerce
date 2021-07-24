@@ -141,15 +141,14 @@ const getUsers = asyncHandler(async (req, res) => {
 // --Route: Delete /api/users/:id
 // --access: Private Route/Admin Only
 
-const DeleteUser = asyncHandler(async (req, res) => {
-  const { id } = req.body;
-  const userToDelete = await User.find({ id });
+const deleteUser = asyncHandler(async (req, res) => {
+  const userToDelete = await User.findByIdAndDelete(req.params.id);
 
   if (userToDelete) {
-    res.json(users);
+    res.json({ message: 'The user has been deleted' });
   } else {
     res.status(404);
-    throw new Error('Users not found');
+    throw new Error('User not found');
   }
 });
 
@@ -160,5 +159,5 @@ export {
   logout,
   updateUserProfile,
   getUsers,
-  DeleteUser,
+  deleteUser,
 };

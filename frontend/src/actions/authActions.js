@@ -9,6 +9,9 @@ import {
   USER_LIST_REQUEST,
   USER_LIST_SUCCESS,
   USER_LIST_FAILURE,
+  USER_DELETE_REQUEST,
+  USER_DELETE_SUCCESS,
+  USER_DELETE_FAILURE,
 } from '../constants/authConstants';
 import axios from 'axios';
 
@@ -114,6 +117,30 @@ export const getUsers = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: USER_LIST_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+//DELETE A USER FOR ADMIN ONLY
+
+export const deleteUser = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_DELETE_REQUEST });
+
+    await axios.delete(`/api/users/${id}`, {
+      withCredentials: true,
+    });
+
+    dispatch({
+      type: USER_DELETE_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_DELETE_FAILURE,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

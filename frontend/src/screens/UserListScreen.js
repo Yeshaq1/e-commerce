@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { getUsers } from '../actions/authActions';
+import { deleteUser, getUsers } from '../actions/authActions';
 
 const UserListScreen = ({ history }) => {
   const authDetail = useSelector((state) => state.authDetail);
@@ -12,6 +12,13 @@ const UserListScreen = ({ history }) => {
 
   const userList = useSelector((state) => state.userList);
   const { users, loading, error } = userList;
+
+  const userDelete = useSelector((state) => state.userDelete);
+  const {
+    success,
+    loading: userDeleteLoading,
+    error: userDeleteError,
+  } = userDelete;
 
   const dispatch = useDispatch();
 
@@ -21,20 +28,20 @@ const UserListScreen = ({ history }) => {
     } else {
       history.push('/');
     }
-  }, [dispatch, history, user.isAdmin]);
+  }, [dispatch, history, user.isAdmin, success]);
 
-  const deleteUserHandler = () => {
-    console.log('deleted');
+  const deleteUserHandler = (id) => {
+    dispatch(deleteUser(id));
   };
 
   return (
     <>
-      {loading ? (
+      {loading || userDeleteLoading ? (
         <Loader />
-      ) : error ? (
+      ) : error || userDeleteError ? (
         <Message variant='danger'>{error}</Message>
       ) : (
-        <Table stripped bordered hover responsive className='table-sm'>
+        <Table striped bordered hover responsive className='table-sm'>
           <thead>
             <tr>
               <th>ID</th>
@@ -52,20 +59,23 @@ const UserListScreen = ({ history }) => {
                 <td>{usr.email}</td>
                 <td>
                   {usr.isAdmin ? (
-                    <i class='fas fa-crown'></i>
+                    <i className='fas fa-crown'></i>
                   ) : (
-                    <i class='fas fa-times'></i>
+                    <i className='fas fa-times'></i>
                   )}
                 </td>
                 <td>
                   <LinkContainer to={'/admin/user/edit'}>
                     <Button variant='light'>
-                      <i class='fas fa-edit'></i>
+                      <i className='fas fa-edit'></i>
                     </Button>
                   </LinkContainer>
-                  <Button onClick={deleteUserHandler} variant='light'>
+                  <Button
+                    onClick={() => deleteUserHandler(usr._id)}
+                    variant='light'
+                  >
                     {' '}
-                    <i class='far fa-trash-alt'></i>
+                    <i className='far fa-trash-alt'></i>
                   </Button>
                 </td>
               </tr>
