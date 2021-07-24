@@ -9,7 +9,11 @@ import {
   ordersGetReducer,
 } from './orderReducer';
 import { paymentIntentReducer } from './paymentReducer';
-import { userDeleteReducer, userListReducer } from './userListReducer';
+import {
+  userDeleteReducer,
+  userDetailReducer,
+  userListReducer,
+} from './userListReducer';
 
 export default combineReducers({
   productList: productListReducer,
@@ -23,4 +27,5 @@ export default combineReducers({
   myOrders: ordersGetReducer,
   userList: userListReducer,
   userDelete: userDeleteReducer,
+  userDetail: userDetailReducer,
 });

@@ -12,6 +12,9 @@ import {
   USER_DELETE_REQUEST,
   USER_DELETE_SUCCESS,
   USER_DELETE_FAILURE,
+  USER_DETAIL_REQUEST,
+  USER_DETAIL_SUCCESS,
+  USER_DETAIL_FAILURE,
 } from '../constants/authConstants';
 import axios from 'axios';
 
@@ -148,3 +151,63 @@ export const deleteUser = (id) => async (dispatch) => {
     });
   }
 };
+
+//Get user info for admins only
+
+export const getUser = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_DETAIL_REQUEST });
+
+    const { data } = await axios.get(`/api/users/${id}`, {
+      withCredentials: true,
+    });
+
+    dispatch({
+      type: USER_DETAIL_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_DETAIL_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+//update user by Admin
+
+export const updateUser =
+  ({ name, email, isAdmin, id }) =>
+  async (dispatch) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const body = JSON.stringify({ name, email, isAdmin });
+
+    try {
+      dispatch({ type: USER_DETAIL_REQUEST });
+
+      const { data } = await axios.put(`/api/users/${id}`, body, config, {
+        withCredentials: true,
+      });
+
+      dispatch({
+        type: USER_DETAIL_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: USER_DETAIL_FAILURE,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
