@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { deleteUser, getUsers } from '../actions/authActions';
+import ModalConfirmation from '../components/ModalConfirmation';
 
 const UserListScreen = ({ history }) => {
   const authDetail = useSelector((state) => state.authDetail);
@@ -20,6 +21,9 @@ const UserListScreen = ({ history }) => {
     error: userDeleteError,
   } = userDelete;
 
+  const [modalShow, setModalShow] = useState(false);
+  const [userToDelete, setUserToDelete] = useState({});
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,6 +36,8 @@ const UserListScreen = ({ history }) => {
 
   const deleteUserHandler = (id) => {
     dispatch(deleteUser(id));
+    setModalShow(false);
+    setUserToDelete({});
   };
 
   return (
@@ -71,7 +77,10 @@ const UserListScreen = ({ history }) => {
                     </Button>
                   </LinkContainer>
                   <Button
-                    onClick={() => deleteUserHandler(usr._id)}
+                    onClick={() => {
+                      setModalShow(true);
+                      setUserToDelete(usr);
+                    }}
                     variant='light'
                   >
                     {' '}
@@ -83,6 +92,13 @@ const UserListScreen = ({ history }) => {
           </tbody>
         </Table>
       )}
+      {/* This is a modal that pops up to show a confirmation message before executing any sensitive functionalities */}
+      <ModalConfirmation
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        submit={() => deleteUserHandler(userToDelete._id)}
+        message={`Are you sure you would like to delete ${userToDelete.name}'s account? this cannot be undone.`}
+      />
     </>
   );
 };
