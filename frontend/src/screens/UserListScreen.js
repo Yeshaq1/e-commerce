@@ -81,7 +81,7 @@ const UserListScreen = ({ history }) => {
                       setModalShow(true);
                       setUserToDelete(usr);
                     }}
-                    variant='light'
+                    variant='danger'
                   >
                     {' '}
                     <i className='far fa-trash-alt'></i>
