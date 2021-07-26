@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import ModalConfirmation from '../components/ModalConfirmation';
-import { listProducts } from '../actions/productActions';
+import { listProducts, deleteProductById } from '../actions/productActions';
 
 const ProductListScreen = ({ history }) => {
   const authDetail = useSelector((state) => state.authDetail);
@@ -17,6 +17,13 @@ const ProductListScreen = ({ history }) => {
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
 
+  const productDelete = useSelector((state) => state.productDelete);
+  const {
+    loading: productDeleteLoading,
+    error: productDeleteError,
+    success,
+  } = productDelete;
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -25,10 +32,10 @@ const ProductListScreen = ({ history }) => {
     } else {
       history.push('/');
     }
-  }, [dispatch, history, user.isAdmin]);
+  }, [dispatch, history, user.isAdmin, success]);
 
   const deleteProductHandler = (id) => {
-    // dispatch(deleteProduct(id));
+    dispatch(deleteProductById(id));
     setModalShow(false);
     setProductToDelete({});
   };
@@ -46,9 +53,9 @@ const ProductListScreen = ({ history }) => {
           </Button>
         </Col>
       </Row>
-      {loading ? (
+      {loading || productDeleteLoading ? (
         <Loader />
-      ) : error ? (
+      ) : error || productDeleteError ? (
         <Message variant='danger'>{error}</Message>
       ) : (
         <>

@@ -84,4 +84,21 @@ const getOrders = asyncHandler(async (req, res) => {
   }
 });
 
-export { addOrder, getOrderById, getOrders };
+// --Desc: Get All Orders
+// --Route: Get /api/orders
+// --access: Private Route, Admin
+
+const getAllOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({})
+    .populate('user', 'name email')
+    .sort({ createdAt: 'desc' });
+
+  if (orders) {
+    res.json(orders);
+  } else {
+    res.status(404);
+    throw new Error('no orders found');
+  }
+});
+
+export { addOrder, getOrderById, getOrders, getAllOrders };
