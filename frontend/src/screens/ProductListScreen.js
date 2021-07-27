@@ -6,12 +6,16 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import ModalConfirmation from '../components/ModalConfirmation';
 import { listProducts, deleteProductById } from '../actions/productActions';
+import CreateProductModal from '../components/CreateProductModal';
 
 const ProductListScreen = ({ history }) => {
   const authDetail = useSelector((state) => state.authDetail);
   const { user } = authDetail;
 
   const [modalShow, setModalShow] = useState(false);
+
+  const [productCreateModalShow, setProductCreateModalShow] = useState(false);
+
   const [productToDelete, setProductToDelete] = useState({});
 
   const productList = useSelector((state) => state.productList);
@@ -24,6 +28,13 @@ const ProductListScreen = ({ history }) => {
     success,
   } = productDelete;
 
+  const productCreate = useSelector((state) => state.productCreate);
+  const {
+    loading: loadingProductCreate,
+    error: errorProductCreate,
+    success: successProductCreate,
+  } = productCreate;
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,12 +43,17 @@ const ProductListScreen = ({ history }) => {
     } else {
       history.push('/');
     }
-  }, [dispatch, history, user.isAdmin, success]);
+  }, [dispatch, history, user.isAdmin, success, successProductCreate]);
 
   const deleteProductHandler = (id) => {
     dispatch(deleteProductById(id));
     setModalShow(false);
     setProductToDelete({});
+  };
+
+  const createProductHandler = () => {
+    console.log('creating product');
+    setProductCreateModalShow(true);
   };
 
   return (
@@ -47,18 +63,24 @@ const ProductListScreen = ({ history }) => {
           <h1>Products</h1>
         </Col>
         <Col className='text-end'>
-          <Button className='my-3'>
+          <Button onClick={createProductHandler} className='my-3'>
             <i className='fas fa-plus'></i>{' '}
             <span className=' d-none d-md-inline'>Create A Product</span>
           </Button>
         </Col>
       </Row>
-      {loading || productDeleteLoading ? (
+      {loading || productDeleteLoading || loadingProductCreate ? (
         <Loader />
-      ) : error || productDeleteError ? (
+      ) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
+          {errorProductCreate && (
+            <Message variant='danger'>{errorProductCreate}</Message>
+          )}
+          {productDeleteError && (
+            <Message variant='danger'>{productDeleteError}</Message>
+          )}
           <Table striped bordered hover responsive className='table-sm'>
             <thead>
               <tr>
@@ -107,6 +129,12 @@ const ProductListScreen = ({ history }) => {
         onHide={() => setModalShow(false)}
         submit={() => deleteProductHandler(productToDelete._id)}
         message={`Are you sure you would like to delete ${productToDelete.name} from your products? this cannot be undone.`}
+      />
+      <CreateProductModal
+        show={productCreateModalShow}
+        onHide={() => setProductCreateModalShow(false)}
+        submit={() => setProductCreateModalShow(false)}
+        user={user._id}
       />
     </>
   );

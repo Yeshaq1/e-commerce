@@ -25,6 +25,9 @@ const ProductScreen = ({ match, history }) => {
   const productDetail = useSelector((state) => state.productDetail);
   const { loading, error, product } = productDetail;
 
+  const authDetail = useSelector((state) => state.authDetail);
+  const { user } = authDetail;
+
   useEffect(() => {
     dispatch(getProductById(match.params.id));
   }, [match.params.id, dispatch]);
@@ -35,14 +38,39 @@ const ProductScreen = ({ match, history }) => {
     // history.push(`/cart/${match.params.id}`);
   };
 
-  
+  const editProductHandler = (id) => {
+    history.push(`admin/product/${id}/edit`);
+  };
 
   return (
     <Fragment>
-      <Link to='/' className='btn btn-light my-3'>
-        Go Back
-      </Link>
-      {addToCartClicked && <Message>Your Item {product.name} has been added to cart  <Link style ={{color: 'blue'}} to ="/cart">click here to view your cart</Link></Message>}
+      {user && user.isAdmin && (
+        <Row className='align-items-center'>
+          <Col>
+            <Link to='/' className='btn btn-light my-3'>
+              Go Back
+            </Link>
+          </Col>
+          <Col className='text-end'>
+            <Button
+              className='my-3'
+              onClick={() => editProductHandler(product._id)}
+            >
+              <i class='fas fa-edit'></i>{' '}
+              <span className=' d-none d-md-inline'>Edit Product</span>
+            </Button>
+          </Col>
+        </Row>
+      )}
+
+      {addToCartClicked && (
+        <Message>
+          Your Item {product.name} has been added to cart{' '}
+          <Link style={{ color: 'blue' }} to='/cart'>
+            click here to view your cart
+          </Link>
+        </Message>
+      )}
       {loading ? (
         <Loader />
       ) : error ? (

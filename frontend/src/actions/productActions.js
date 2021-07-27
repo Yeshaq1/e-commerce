@@ -8,6 +8,9 @@ import {
   PRODUCT_DELETE_REQUEST,
   PRODUCT_DELETE_SUCCESS,
   PRODUCT_DELETE_FAIL,
+  PRODUCT_CREATE_REQUEST,
+  PRODUCT_CREATE_SUCCESS,
+  PRODUCT_CREATE_FAIL,
 } from '../constants/productConstants';
 import axios from 'axios';
 
@@ -79,3 +82,45 @@ export const deleteProductById = (productId) => async (dispatch) => {
     });
   }
 };
+
+//create a product Admin Only
+export const createProduct =
+  ({ name, description, brand, price, image, category, countInStock, user }) =>
+  async (dispatch) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const body = JSON.stringify({
+      name,
+      description,
+      brand,
+      price,
+      image,
+      category,
+      countInStock,
+      user,
+    });
+
+    try {
+      dispatch({ type: PRODUCT_CREATE_REQUEST });
+
+      await axios.post('/api/products', body, config, {
+        withCredentials: true,
+      });
+
+      dispatch({
+        type: PRODUCT_CREATE_SUCCESS,
+      });
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_CREATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
