@@ -17,6 +17,7 @@ import orderConfirmationScreen from './screens/OrderConfirmationScreen';
 import UserListScreen from './screens/UserListScreen';
 import EditUserScreen from './screens/EditUserScreen';
 import ProductListScreen from './screens/ProductListScreen';
+import ProductEditScreen from './screens/ProductEditScreen';
 
 function App() {
   return (
@@ -43,10 +44,10 @@ function App() {
             path='/admin/productlist'
             component={ProductListScreen}
           />
-          {/* <PrivateRoute
+          <PrivateRoute
             path='/admin/product/:id/edit'
-            component={ProductListScreen}
-          /> */}
+            component={ProductEditScreen}
+          />
         </Container>
       </main>
       <Footer />

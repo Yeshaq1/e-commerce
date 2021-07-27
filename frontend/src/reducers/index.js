@@ -4,6 +4,7 @@ import {
   productDetailReducer,
   productDeleteReducer,
   productCreateReducer,
+  productUpdateReducer,
 } from './productReducer';
 import { cartReducer } from './cartReducer';
 import { authReducer } from './authReducer';
@@ -35,4 +36,5 @@ export default combineReducers({
   userDetail: userDetailReducer,
   productDelete: productDeleteReducer,
   productCreate: productCreateReducer,
+  productUpdate: productUpdateReducer,
 });

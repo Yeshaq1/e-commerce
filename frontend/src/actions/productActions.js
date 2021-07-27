@@ -11,6 +11,9 @@ import {
   PRODUCT_CREATE_REQUEST,
   PRODUCT_CREATE_SUCCESS,
   PRODUCT_CREATE_FAIL,
+  PRODUCT_UPDATE_REQUEST,
+  PRODUCT_UPDATE_SUCCESS,
+  PRODUCT_UPDATE_FAIL,
 } from '../constants/productConstants';
 import axios from 'axios';
 
@@ -117,6 +120,47 @@ export const createProduct =
     } catch (error) {
       dispatch({
         type: PRODUCT_CREATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+//update a product Admin Only
+export const updateProduct =
+  ({ name, description, brand, price, image, category, countInStock, id }) =>
+  async (dispatch) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const body = JSON.stringify({
+      name,
+      description,
+      brand,
+      price,
+      image,
+      category,
+      countInStock,
+    });
+
+    try {
+      dispatch({ type: PRODUCT_UPDATE_REQUEST });
+
+      await axios.put(`/api/products/${id}`, body, config, {
+        withCredentials: true,
+      });
+
+      dispatch({
+        type: PRODUCT_UPDATE_SUCCESS,
+      });
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_UPDATE_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

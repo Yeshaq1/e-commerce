@@ -8,7 +8,7 @@ import { getUser, updateUser } from '../actions/authActions';
 import FormContainer from '../components/FormContainer';
 import { USER_DETAIL_RESET } from '../constants/authConstants';
 
-const EditUserScreen = ({ match }) => {
+const EditUserScreen = ({ match, history }) => {
   const dispatch = useDispatch();
 
   const userDetail = useSelector((state) => state.userDetail);
@@ -38,7 +38,7 @@ const EditUserScreen = ({ match }) => {
         });
       }
     }
-  }, [dispatch, match.params.id, user, success]);
+  }, [dispatch, match.params.id, user, success, user.isAdmin, history]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

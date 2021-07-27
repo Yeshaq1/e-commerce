@@ -39,18 +39,18 @@ const ProductScreen = ({ match, history }) => {
   };
 
   const editProductHandler = (id) => {
-    history.push(`admin/product/${id}/edit`);
+    history.push(`/admin/product/${id}/edit`);
   };
 
   return (
     <Fragment>
-      {user && user.isAdmin && (
-        <Row className='align-items-center'>
-          <Col>
-            <Link to='/' className='btn btn-light my-3'>
-              Go Back
-            </Link>
-          </Col>
+      <Row className='align-items-center'>
+        <Col>
+          <Link to='/' className='btn btn-light my-3'>
+            Go Back
+          </Link>
+        </Col>
+        {user && user.isAdmin && (
           <Col className='text-end'>
             <Button
               className='my-3'
@@ -60,8 +60,8 @@ const ProductScreen = ({ match, history }) => {
               <span className=' d-none d-md-inline'>Edit Product</span>
             </Button>
           </Col>
-        </Row>
-      )}
+        )}
+      </Row>
 
       {addToCartClicked && (
         <Message>
