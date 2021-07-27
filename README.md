@@ -10,3 +10,10 @@ API Integrations:
 1) Stripe
 2) PayPal
 
+The platform has user access and authentication set up as well as granular access for Admins. 
+Admins can create and edit products, create and edit users, review orders, set up delivery on the platform. 
+
+Users can place orders, search and review products on the platform. 
+
+
+
