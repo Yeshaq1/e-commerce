@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { createProduct } from '../actions/productActions';
+import axios from 'axios';
 
 const CreateProductModal = ({ show, onHide, submit, user }) => {
   const [product, updateProduct] = useState({
@@ -36,6 +37,31 @@ const CreateProductModal = ({ show, onHide, submit, user }) => {
     submit();
   };
 
+  const uploadFilehandler = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      };
+
+      const { data } = await axios.post('/api/upload', formData, config);
+
+      updateProduct((preValue) => {
+        return {
+          ...preValue,
+          image: data,
+        };
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div>
       <Modal show={show} onHide={onHide} animation={false}>
@@ -58,7 +84,8 @@ const CreateProductModal = ({ show, onHide, submit, user }) => {
             <Form.Group>
               <Form.Label>Description</Form.Label>
               <Form.Control
-                type='text'
+                as='textarea'
+                rows={3}
                 placeholder='Enter description'
                 value={description}
                 name='description'
@@ -87,6 +114,12 @@ const CreateProductModal = ({ show, onHide, submit, user }) => {
                 onChange={handleChange}
                 required
               />
+              <input
+                className='form-control'
+                type='file'
+                id='formFile'
+                onChange={uploadFilehandler}
+              ></input>
             </Form.Group>
             <Form.Group>
               <Form.Label>Category</Form.Label>

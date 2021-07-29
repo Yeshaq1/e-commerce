@@ -52,7 +52,6 @@ const ProductListScreen = ({ history }) => {
   };
 
   const createProductHandler = () => {
-    console.log('creating product');
     setProductCreateModalShow(true);
   };
 

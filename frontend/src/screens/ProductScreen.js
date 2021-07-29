@@ -56,7 +56,7 @@ const ProductScreen = ({ match, history }) => {
               className='my-3'
               onClick={() => editProductHandler(product._id)}
             >
-              <i class='fas fa-edit'></i>{' '}
+              <i className='fas fa-edit'></i>{' '}
               <span className=' d-none d-md-inline'>Edit Product</span>
             </Button>
           </Col>

@@ -5,6 +5,7 @@ import { getProductById, updateProduct } from '../actions/productActions';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants';
+import axios from 'axios';
 
 const ProductEditScreen = ({ match, history }) => {
   const dispatch = useDispatch();
@@ -71,6 +72,32 @@ const ProductEditScreen = ({ match, history }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(updateProduct(productEdit));
+  };
+
+  // onChange Handler for Image Upload
+  const uploadFilehandler = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      };
+
+      const { data } = await axios.post('/api/upload', formData, config);
+
+      updateEditProduct((preValue) => {
+        return {
+          ...preValue,
+          image: data,
+        };
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -170,6 +197,25 @@ const ProductEditScreen = ({ match, history }) => {
                         name='brand'
                         onChange={handleChange}
                       />
+                    </Form.Group>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <Form.Group>
+                      <Form.Label>Image</Form.Label>
+                      <Form.Control
+                        type='text'
+                        placeholder='Enter image url'
+                        value={image}
+                        name='image'
+                        onChange={handleChange}
+                      ></Form.Control>
+
+                      <input
+                        className='form-control'
+                        type='file'
+                        id='formFile'
+                        onChange={uploadFilehandler}
+                      ></input>
                     </Form.Group>
                   </ListGroup.Item>
                   <ListGroup.Item>
