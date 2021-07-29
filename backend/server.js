@@ -41,13 +41,14 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/upload', uploadRoutes);
 
+//-------------------- NOT USED in this project because files are now stored in S3, keeping this section for future purposes only -----
 // static folder serve
 //__dirname does not work when using the ES modules. Only avail using commoin js.
 // This can be mimicked by using path.resolve
 
-const __dirname = path.resolve();
-app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
-
+// const __dirname = path.resolve();
+// app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+//------------------------------------------------------------------------------------
 // Error handeling
 app.use(notFound);
 app.use(errorHandler);
