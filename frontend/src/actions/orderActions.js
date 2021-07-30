@@ -1,8 +1,14 @@
 import axios from 'axios';
 import {
+  ORDERS_GET_ALL_FAIL,
+  ORDERS_GET_ALL_REQUEST,
+  ORDERS_GET_ALL_SUCCESS,
   ORDERS_GET_FAIL,
   ORDERS_GET_REQUEST,
   ORDERS_GET_SUCCESS,
+  ORDERS_UPDATE_FAIL,
+  ORDERS_UPDATE_REQUEST,
+  ORDERS_UPDATE_SUCCESS,
   ORDER_CREATE_FAIL,
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
@@ -102,6 +108,51 @@ export const getOrders = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ORDERS_GET_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+//Admin GET ALL orders
+export const getAllOrders = () => async (dispatch) => {
+  try {
+    dispatch({ type: ORDERS_GET_ALL_REQUEST });
+
+    const { data } = await axios.get(`/api/orders`);
+
+    dispatch({
+      type: ORDERS_GET_ALL_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ORDERS_GET_ALL_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// update order to Delivered
+export const markOrderAsDeliveredById = (orderId) => async (dispatch) => {
+  try {
+    dispatch({ type: ORDERS_UPDATE_REQUEST });
+
+    const { data } = await axios.put(`/api/orders/${orderId}`, {
+      withCredentials: true,
+    });
+
+    dispatch({
+      type: ORDERS_UPDATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ORDERS_UPDATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

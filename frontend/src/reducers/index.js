@@ -5,14 +5,18 @@ import {
   productDeleteReducer,
   productCreateReducer,
   productUpdateReducer,
+  productReviewCreateReducer,
+  productTopRatedReducer,
 } from './productReducer';
 import { cartReducer } from './cartReducer';
 import { authReducer } from './authReducer';
 import { profileReducer } from './profileReducer';
 import {
+  GetAllOrdersReducer,
   orderCreateReducer,
   orderGetReducer,
   ordersGetReducer,
+  orderUpdateReducer,
 } from './orderReducer';
 import { paymentIntentReducer } from './paymentReducer';
 import {
@@ -37,4 +41,8 @@ export default combineReducers({
   productDelete: productDeleteReducer,
   productCreate: productCreateReducer,
   productUpdate: productUpdateReducer,
+  allOrders: GetAllOrdersReducer,
+  orderUpdate: orderUpdateReducer,
+  productReview: productReviewCreateReducer,
+  topProducts: productTopRatedReducer,
 });

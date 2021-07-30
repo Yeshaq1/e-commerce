@@ -101,4 +101,31 @@ const getAllOrders = asyncHandler(async (req, res) => {
   }
 });
 
-export { addOrder, getOrderById, getOrders, getAllOrders };
+// --Desc: Mark Order as Delivered by ID
+// --Route: put /api/orders/:id
+// --access: Private Route, Admin Only
+
+const markOrderAsDeliveredById = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
+
+  if (order) {
+    if (order.isDelivered) {
+      throw new Error('order already delivered');
+    }
+    order.isDelivered = true;
+    order.deliveredAt = Date.now();
+    const updatedOrder = await order.save();
+    res.json(updatedOrder);
+  } else {
+    res.status(404);
+    throw new Error('no order found');
+  }
+});
+
+export {
+  addOrder,
+  getOrderById,
+  getOrders,
+  getAllOrders,
+  markOrderAsDeliveredById,
+};
