@@ -30,16 +30,26 @@ app.use(
   })
 );
 
-app.get('/', (req, res) => {
-  res.send('API is running...');
-});
-
 // route middleware
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/upload', uploadRoutes);
+
+const __dirname = path.resolve();
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/frontend/build')));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
+  });
+} else {
+  app.get('/', (req, res) => {
+    res.send('API is running...');
+  });
+}
 
 //-------------------- NOT USED in this project because files are now stored in S3, keeping this section for future purposes only -----
 // static folder serve
