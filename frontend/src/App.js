@@ -23,6 +23,7 @@ import OrderListScreen from './screens/OrderListScreen';
 function App() {
   return (
     <Router>
+    // update to new router as per upgrade.
       <Header />
       <main className='py-3'>
         <Container>
